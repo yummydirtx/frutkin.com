@@ -24,6 +24,7 @@ import jfrutkin from './assets/jfrutkin.jpeg';
 import efrutkin from './assets/efrutkin.jpeg';
 import rfrutkin from './assets/rfrutkin.jpeg';
 import sfrutkin from './assets/sfrutkin.jpg';
+import Footer from './Footer';
 
 // Placeholder data - replace with actual data and images
 const people = [
@@ -82,7 +83,7 @@ function PersonCard({ person }) {
       {/* Use CardMedia to display the image */}
       <CardMedia
         component="img"
-        height="340" // Adjust height as needed
+        height="auto" // Adjust height as needed
         image={person.image}
         alt={person.name}
         sx={{ objectFit: 'cover' }} // Optional: control how the image fits
@@ -195,14 +196,7 @@ function App() {
       </Container>
 
       {/* Footer */}
-      <Box component="footer" sx={{ bgcolor: 'background.paper', p: 2, mt: 'auto', textAlign: 'center' }}>
-        <Container maxWidth="lg">
-          <Typography variant="body2" color="text.secondary">
-            Turtle Icon by Econceptive from the Noun Project
-          </Typography>
-          {/* Add other footer content if needed */}
-        </Container>
-      </Box>
+      <Footer mode={mode} /> {/* Pass mode to Footer */}
     </Box>
     </ThemeProvider>
   );
