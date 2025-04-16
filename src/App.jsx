@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react'; // Corrected import
 import {
   AppBar,
   Toolbar,
@@ -20,6 +20,7 @@ import {
   useTheme,
   useMediaQuery,
 } from '@mui/material';
+import AppAppBar from './AppAppBar'; // Changed from named import { AppAppBar }
 import MenuIcon from '@mui/icons-material/Menu';
 import LinkedInIcon from '@mui/icons-material/LinkedIn'; // Example Icon
 
@@ -74,7 +75,7 @@ const services = [
 // Basic Card component for reuse
 function PersonCard({ person }) {
   return (
-    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <Card sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
       {/* Basic placeholder for image */}
       <Box sx={{ height: 140, backgroundColor: 'grey.300', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
          {/* In a real app, use CardMedia with person.image */}
@@ -115,7 +116,23 @@ function PersonCard({ person }) {
 
 
 function App() {
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [mode, setMode] = useState(() => {
+    // Check localStorage first
+    const localMode = localStorage.getItem('mode');
+    if (localMode) return localMode;
+    // Default to system preference if no localStorage value
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  });
+
+  const toggleColorMode = () => {
+    setMode((prev) => {
+      const newMode = prev === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('mode', newMode); // Save the new mode to localStorage
+      // Theme saving to Firestore is now handled in AppAppBar based on activeUser
+      return newMode;
+    });
+  };
+  const [drawerOpen, setDrawerOpen] = useState(false); // This already uses useState directly
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Check for mobile size
 
@@ -155,32 +172,7 @@ function App() {
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <CssBaseline />
       {/* Basic AppBar */}
-      <AppBar position="static">
-        <Toolbar>
-          {isMobile && (
-             <IconButton
-               size="large"
-               edge="start"
-               color="inherit"
-               aria-label="menu"
-               sx={{ mr: 2 }}
-               onClick={toggleDrawer(true)}
-             >
-               <MenuIcon />
-             </IconButton>
-          )}
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            FRUTKIN.COM
-          </Typography>
-          {!isMobile && (
-            <Box>
-               {/* Desktop Nav Links */}
-               <Button color="inherit" href="#!">Home</Button>
-               <Button color="inherit" href="#!">Younger Frutkins</Button> {/* Update href later */}
-            </Box>
-          )}
-        </Toolbar>
-      </AppBar>
+      <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
 
        {/* Mobile Drawer */}
        <Drawer
@@ -204,16 +196,18 @@ function App() {
         </Box>
 
         {/* People Grid */}
-        <Grid container spacing={4}>
+        <Grid container spacing={4} sx={{ display: 'flex', alignItems: 'stretch' }}>
           {people.map((person) => (
-            <Grid item key={person.name} xs={12} sm={6} md={4}>
+            // Group responsive props under the 'size' prop
+            <Grid key={person.name} size={{ xs: 12, sm: 6, md: 4 }}>
               <PersonCard person={person} />
             </Grid>
           ))}
 
            {/* Services Section - Placed in the grid for layout */}
-           <Grid item xs={12} sm={6} md={4}>
-             <Card sx={{ height: '100%'}}>
+           {/* Group responsive props under the 'size' prop */}
+           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+             <Card sx={{ width: '100%', height: '100%' }}>
                 <CardContent>
                     <Typography variant="h6" gutterBottom>SERVICES</Typography>
                     <List dense>
