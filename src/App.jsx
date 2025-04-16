@@ -43,8 +43,8 @@ const people = [
     image: efrutkin, // Updated path for public folder
   },
   {
-    name: 'Rachel Frutkin Beachler',
-    title: 'Personal Trainer, Running on Happy / Asst Track Coach',
+    name: 'Rachel Frutkin',
+    title: 'Personal Trainer, Running on Happy / Head Track Coach',
     location: 'Cleveland, OH',
     linkedin: 'https://www.linkedin.com/in/rfrutkin',
     image: rfrutkin, // Updated path for public folder
