@@ -50,7 +50,7 @@ const people = [
     image: rfrutkin, // Updated path for public folder
   },
   {
-    name: 'Alexander Frutkin',
+    name: 'Alex Frutkin',
     title: 'Frontend Developer, Frutkin.com',
     location: 'Irvine, CA',
     linkedin: 'https://www.linkedin.com/in/alex-frutkin-63804597/',
