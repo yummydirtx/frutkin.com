@@ -52,7 +52,7 @@ const people = [
   {
     name: 'Alexander Frutkin',
     title: 'Frontend Developer, Frutkin.com',
-    location: 'Irvine, California',
+    location: 'Irvine, CA',
     linkedin: 'https://www.linkedin.com/in/alex-frutkin-63804597/',
     image: afrutkin, // Updated path for public folder
   },
