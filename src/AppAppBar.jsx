@@ -17,7 +17,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THEJUNKYARD OR THE USE OR OTHER DEALINGS IN THEJUNKYARD.
 
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 // Removed Firebase imports
 import Box from '@mui/material/Box';
@@ -25,15 +25,11 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
-import MenuItem from '@mui/material/MenuItem';
-import Drawer from '@mui/material/Drawer';
-import MenuIcon from '@mui/icons-material/Menu';
 // Removed LoginIcon, HowToRegIcon
 import ToggleColorMode from './ToggleColorMode';
 // Removed LoginModal, SignUpModal
-import logo from './assets/bitmap.png';
+import logo from './assets/lightlogo.png';
+import darkLogo from './assets/darklogo.png';
 // Removed useModal
 // Removed ProfileMenu
 // Removed useAuth
@@ -45,13 +41,9 @@ const logoStyle = {
 };
 
 function AppAppBar({ mode, toggleColorMode }) {
-  const [open, setOpen] = useState(false);
+  // Removed open state and toggleDrawer function
   // Removed useAuth hook call
   // Removed useModal hook calls
-
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
 
   // Removed handleSignOut
 
@@ -102,12 +94,12 @@ function AppAppBar({ mode, toggleColorMode }) {
                 flexGrow: 1,
                 display: 'flex',
                 alignItems: 'center',
-                ml: '-18px',
+                ml: '-10px',
                 px: 0,
               }}
             >
               <img
-                src={logo}
+                src={mode === 'dark' ? darkLogo : logo}
                 style={logoStyle}
                 alt="logo of theJunkyard"
                 onClick={() => window.open("/", "_self")}
@@ -120,42 +112,13 @@ function AppAppBar({ mode, toggleColorMode }) {
             </Box>
             <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center' }}>
               {/* Removed Mobile ProfileMenu */}
-              <Button
-                variant="text"
-                color="primary"
-                aria-label="menu"
-                onClick={toggleDrawer(true)}
-                sx={{ minWidth: '30px', p: '4px' }}
-              >
-                <MenuIcon />
-              </Button>
+              {/* Removed Menu Button */}
+              <ToggleColorMode mode={mode} toggleColorMode={handleThemeChange} />
             </Box>
           </Toolbar>
         </Container>
       </AppBar>
-      {/* Mobile Drawer */}
-      <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
-        <Box
-          sx={{
-            minWidth: '60dvw',
-            p: 2,
-            backgroundColor: 'background.paper',
-            flexGrow: 1,
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'end',
-              flexGrow: 1,
-            }}
-          >
-            <ToggleColorMode mode={mode} toggleColorMode={handleThemeChange} />
-          </Box>
-          {/* Removed Navigation MenuItems */}
-        </Box>
-      </Drawer>
+      {/* Removed Mobile Drawer */}
     </div>
   );
 }

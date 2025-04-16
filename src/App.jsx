@@ -8,58 +8,59 @@ import {
   Card,
   CardContent,
   CardActions,
+  CardMedia, // Added CardMedia
   Button,
   Box,
   CssBaseline,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  useTheme,
-  useMediaQuery,
 } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import AppAppBar from './AppAppBar'; // Changed from named import { AppAppBar }
-import MenuIcon from '@mui/icons-material/Menu';
 import LinkedInIcon from '@mui/icons-material/LinkedIn'; // Example Icon
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import afrutkin from './assets/afrutkin.jpeg';
+import jfrutkin from './assets/jfrutkin.jpeg';
+import efrutkin from './assets/efrutkin.jpeg';
+import rfrutkin from './assets/rfrutkin.jpeg';
+import sfrutkin from './assets/sfrutkin.jpg';
 
 // Placeholder data - replace with actual data and images
 const people = [
   {
     name: 'Jonathan Frutkin',
-    title: 'CEO, Radix Law',
-    location: 'Scottsdale, AZ & Medellin, Colombia',
+    title: 'Co-Managing Partner, BLSQ Management',
+    location: 'Boca Raton, FL & Medellin, Colombia',
     linkedin: 'https://www.linkedin.com/in/frutkinlaw',
-    image: 'jfrutkin.jpeg', // Assuming images are in public folder
+    image: jfrutkin, // Updated path for public folder
   },
   {
     name: 'Elliott Frutkin',
     title: 'Experienced Technology Professional',
     location: 'San Jose, CA',
     linkedin: 'https://www.linkedin.com/in/frutkin/',
-    image: 'efrutkin.jpeg',
+    image: efrutkin, // Updated path for public folder
   },
   {
     name: 'Rachel Frutkin Beachler',
     title: 'Personal Trainer, Running on Happy / Asst Track Coach',
     location: 'Cleveland, OH',
     linkedin: 'https://www.linkedin.com/in/rfrutkin',
-    image: 'rfrutkin.jpeg',
+    image: rfrutkin, // Updated path for public folder
   },
   {
-    name: 'Maxine Frutkin',
-    title: 'Real Estate Professional',
-    location: 'Scottsdale, AZ',
-    linkedin: 'https://www.linkedin.com/in/mfrutkin',
-    image: 'Maxine_Frutkin_2037_Gray.png',
+    name: 'Alexander Frutkin',
+    title: 'Frontend Developer, Frutkin.com',
+    location: 'Irvine, California',
+    linkedin: 'https://www.linkedin.com/in/alex-frutkin-63804597/',
+    image: afrutkin, // Updated path for public folder
   },
   {
-    name: 'Harvey Frutkin',
-    title: 'Former Lawyer / Author',
-    location: 'Cleveland, OH',
-    article: 'https://azbigmedia.com/business/business-leaders/frutkin-law-firm-announces-harvey-frutkins-retirement/',
-    image: 'hfrutkin.jpeg',
+    name: 'Samuel Frutkin',
+    title: 'Discord Moderator',
+    location: 'Boca Raton, FL',
+    linkedin: 'https://www.linkedin.com/in/samuel-frutkin-316730311/',
+    image: sfrutkin, // Updated path for public folder
   },
 ];
 
@@ -70,17 +71,22 @@ const services = [
   'Estate Planning',
   'Real Estate Buyers & Sellers',
   'Bankruptcy / Restructuring',
+  'Websites',
+  'Tutoring'
 ];
 
 // Basic Card component for reuse
 function PersonCard({ person }) {
   return (
     <Card sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
-      {/* Basic placeholder for image */}
-      <Box sx={{ height: 140, backgroundColor: 'grey.300', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-         {/* In a real app, use CardMedia with person.image */}
-         <Typography variant="caption">{person.image || 'Image'}</Typography>
-      </Box>
+      {/* Use CardMedia to display the image */}
+      <CardMedia
+        component="img"
+        height="340" // Adjust height as needed
+        image={person.image}
+        alt={person.name}
+        sx={{ objectFit: 'cover' }} // Optional: control how the image fits
+      />
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography gutterBottom variant="h6" component="div">
           {person.name}
@@ -132,62 +138,19 @@ function App() {
       return newMode;
     });
   };
-  const [drawerOpen, setDrawerOpen] = useState(false); // This already uses useState directly
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Check for mobile size
-
-  const toggleDrawer = (open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-    setDrawerOpen(open);
-  };
-
-  const drawerList = (
-    <Box
-      sx={{ width: 250 }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
-      <List>
-        {/* Add actual navigation links here */}
-        <ListItem disablePadding>
-          <ListItemButton component="a" href="#!">
-            <ListItemText primary="Home" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton component="a" href="#!"> {/* Update href later */}
-            <ListItemText primary="Younger Frutkins" />
-          </ListItemButton>
-        </ListItem>
-         {/* Add more links as needed */}
-      </List>
-    </Box>
-  );
 
   return (
-    // Wrap everything in a Box with flex column layout
+    <ThemeProvider theme={createTheme({ palette: { mode } })}>
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <CssBaseline />
       {/* Basic AppBar */}
       <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
 
-       {/* Mobile Drawer */}
-       <Drawer
-         anchor="left"
-         open={drawerOpen}
-         onClose={toggleDrawer(false)}
-       >
-         {drawerList}
-       </Drawer>
-
       {/* Main Content Area - Add flexGrow: 1 */}
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flexGrow: 1 }}>
+      <Container maxWidth="lg" sx={{ mt: 16, mb: 4, flexGrow: 1 }}>
         {/* Welcome Section */}
         <Box sx={{ textAlign: 'center', mb: 4 }}>
-          <Typography variant="h4" component="h1" gutterBottom>
+          <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
             Welcome to FRUTKIN.COM
           </Typography>
           <Typography variant="body1">
@@ -240,7 +203,8 @@ function App() {
           {/* Add other footer content if needed */}
         </Container>
       </Box>
-    </Box> // Close the wrapping Box
+    </Box>
+    </ThemeProvider>
   );
 }
 
