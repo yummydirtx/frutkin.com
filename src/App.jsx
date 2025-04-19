@@ -58,7 +58,7 @@ const people = [
   },
   {
     name: 'Samuel Frutkin',
-    title: 'Discord Moderator',
+    title: 'Community Developer',
     location: 'Boca Raton, FL',
     linkedin: 'https://www.linkedin.com/in/samuel-frutkin-316730311/',
     image: sfrutkin, // Updated path for public folder
