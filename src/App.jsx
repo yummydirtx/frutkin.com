@@ -14,8 +14,9 @@ import {
   CssBaseline,
 } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import AppAppBar from './AppAppBar'; // Changed from named import { AppAppBar }
-import LinkedInIcon from '@mui/icons-material/LinkedIn'; // Example Icon
+import AppAppBar from './AppAppBar';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import WebIcon from '@mui/icons-material/Web';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -54,6 +55,7 @@ const people = [
     title: 'Frontend Developer, Frutkin.com',
     location: 'Irvine, CA',
     linkedin: 'https://www.linkedin.com/in/alex-frutkin-63804597/',
+    website: 'https://thejunkyard.dev/',
     image: afrutkin, // Updated path for public folder
   },
   {
@@ -111,11 +113,21 @@ function PersonCard({ person }) {
           </Button>
         )}
         {person.article && (
-           <Button size="small" href={person.article} target="_blank">
-             Retirement Article
-           </Button>
+          <Button size="small" href={person.article} target="_blank">
+            Retirement Article
+          </Button>
         )}
-         {/* Add other links if needed */}
+        {person.website && (
+          <Button
+            size="small"
+            href={person.website}
+            target="_blank"
+            startIcon={<WebIcon />}
+          >
+            Website
+          </Button>
+        )}
+        {/* Add other links if needed */}
       </CardActions>
     </Card>
   );
@@ -142,62 +154,62 @@ function App() {
 
   return (
     <ThemeProvider theme={createTheme({ palette: { mode } })}>
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <CssBaseline />
-      {/* Basic AppBar */}
-      <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <CssBaseline />
+        {/* Basic AppBar */}
+        <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
 
-      {/* Main Content Area - Add flexGrow: 1 */}
-      <Container maxWidth="lg" sx={{ mt: 16, mb: 4, flexGrow: 1 }}>
-        {/* Welcome Section */}
-        <Box sx={{ textAlign: 'center', mb: 4 }}>
-          <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
-            Welcome to FRUTKIN.COM
-          </Typography>
-          <Typography variant="body1">
-            If you've landed here, you are probably looking for one of the following services or people:
-          </Typography>
-        </Box>
+        {/* Main Content Area - Add flexGrow: 1 */}
+        <Container maxWidth="lg" sx={{ mt: 16, mb: 4, flexGrow: 1 }}>
+          {/* Welcome Section */}
+          <Box sx={{ textAlign: 'center', mb: 4 }}>
+            <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
+              Welcome to FRUTKIN.COM
+            </Typography>
+            <Typography variant="body1">
+              If you've landed here, you are probably looking for one of the following services or people:
+            </Typography>
+          </Box>
 
-        {/* People Grid */}
-        <Grid container spacing={4} sx={{ display: 'flex', alignItems: 'stretch' }}>
-          {people.map((person) => (
-            // Group responsive props under the 'size' prop
-            <Grid key={person.name} size={{ xs: 12, sm: 6, md: 4 }}>
-              <PersonCard person={person} />
-            </Grid>
-          ))}
+          {/* People Grid */}
+          <Grid container spacing={4} sx={{ display: 'flex', alignItems: 'stretch' }}>
+            {people.map((person) => (
+              // Group responsive props under the 'size' prop
+              <Grid key={person.name} size={{ xs: 12, sm: 6, md: 4 }}>
+                <PersonCard person={person} />
+              </Grid>
+            ))}
 
-           {/* Services Section - Placed in the grid for layout */}
-           {/* Group responsive props under the 'size' prop */}
-           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-             <Card sx={{ width: '100%', height: '100%' }}>
+            {/* Services Section - Placed in the grid for layout */}
+            {/* Group responsive props under the 'size' prop */}
+            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+              <Card sx={{ width: '100%', height: '100%' }}>
                 <CardContent>
-                    <Typography variant="h6" gutterBottom>SERVICES</Typography>
-                    <List dense>
-                        {services.map((service) => (
-                            <ListItem key={service} disablePadding>
-                                <ListItemText primary={`• ${service}`} />
-                            </ListItem>
-                        ))}
-                    </List>
+                  <Typography variant="h6" gutterBottom>SERVICES</Typography>
+                  <List dense>
+                    {services.map((service) => (
+                      <ListItem key={service} disablePadding>
+                        <ListItemText primary={`• ${service}`} />
+                      </ListItem>
+                    ))}
+                  </List>
                 </CardContent>
-             </Card>
-           </Grid>
-        </Grid>
+              </Card>
+            </Grid>
+          </Grid>
 
-         {/* Contact Prompt */}
-         <Box sx={{ textAlign: 'center', mt: 4, mb: 4 }}>
-           <Typography variant="h6">
-             Please use the links to be in touch with us - we would love to hear from you.
-           </Typography>
-         </Box>
+          {/* Contact Prompt */}
+          <Box sx={{ textAlign: 'center', mt: 4, mb: 4 }}>
+            <Typography variant="h6">
+              Please use the links to be in touch with us - we would love to hear from you.
+            </Typography>
+          </Box>
 
-      </Container>
+        </Container>
 
-      {/* Footer */}
-      <Footer mode={mode} /> {/* Pass mode to Footer */}
-    </Box>
+        {/* Footer */}
+        <Footer mode={mode} /> {/* Pass mode to Footer */}
+      </Box>
     </ThemeProvider>
   );
 }
