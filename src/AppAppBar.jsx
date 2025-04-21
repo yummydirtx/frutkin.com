@@ -101,7 +101,7 @@ function AppAppBar({ mode, toggleColorMode }) {
               <img
                 src={mode === 'dark' ? darkLogo : logo}
                 style={logoStyle}
-                alt="logo of theJunkyard"
+                alt="logo of frutkin.com"
                 onClick={() => window.open("/", "_self")}
               />
               {/* Removed Desktop Navigation MenuItems */}
