@@ -26,6 +26,7 @@ import efrutkin from './assets/efrutkin.jpeg';
 import rfrutkin from './assets/rfrutkin.jpeg';
 import sfrutkin from './assets/sfrutkin.jpg';
 import Footer from './Footer';
+import GradientText from './GradientText';
 
 // Placeholder data - replace with actual data and images
 const people = [
@@ -300,17 +301,10 @@ function App() {
               sx={{ 
                 fontWeight: 800,
                 fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4rem' },
-                background: (theme) => 
-                  theme.palette.mode === 'light'
-                    ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-                    : 'linear-gradient(135deg, #90caf9 0%, #ce93d8 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
                 mb: 3,
               }}
             >
-              Welcome to FRUTKIN.COM
+              Welcome to <GradientText>FRUTKIN.COM</GradientText>
             </Typography>
             <Typography 
               variant="h6" 
