@@ -21,33 +21,94 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import { keyframes } from '@mui/material/styles';
 import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded';
 import ModeNightRoundedIcon from '@mui/icons-material/ModeNightRounded';
 
+// Sunrise animation (moon setting, sun rising)
+const sunrise = keyframes`
+  0% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(10px) rotate(180deg);
+    opacity: 0;
+  }
+  51% {
+    transform: translateY(-10px) rotate(180deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px) rotate(360deg);
+    opacity: 1;
+  }
+`;
+
+// Sunset animation (sun setting, moon rising)
+const sunset = keyframes`
+  0% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(10px) rotate(180deg);
+    opacity: 0;
+  }
+  51% {
+    transform: translateY(-10px) rotate(180deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px) rotate(360deg);
+    opacity: 1;
+  }
+`;
+
 function ToggleColorMode({ mode, toggleColorMode }) {
+  const [isAnimating, setIsAnimating] = React.useState(false);
+
+  const handleToggle = () => {
+    setIsAnimating(true);
+    toggleColorMode();
+    setTimeout(() => setIsAnimating(false), 600);
+  };
+
   return (
     <Box sx={{ maxWidth: '32px' }}>
       <Button
         variant="text"
-        onClick={toggleColorMode}
+        onClick={handleToggle}
         size="small"
         aria-label="button to toggle theme"
         sx={{ 
           minWidth: '32px', 
           height: '32px', 
           p: '4px',
-          transition: 'all 0.3s ease',
+          overflow: 'hidden',
           '&:hover': {
-            transform: 'rotate(180deg)',
             backgroundColor: 'action.hover',
           },
         }}
       >
-        {mode === 'dark' ? (
-          <WbSunnyRoundedIcon fontSize="small" />
-        ) : (
-          <ModeNightRoundedIcon fontSize="small" />
-        )}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            animation: isAnimating 
+              ? mode === 'dark' 
+                ? `${sunrise} 0.6s ease-in-out`
+                : `${sunset} 0.6s ease-in-out`
+              : 'none',
+          }}
+        >
+          {mode === 'dark' ? (
+            <WbSunnyRoundedIcon fontSize="small" />
+          ) : (
+            <ModeNightRoundedIcon fontSize="small" />
+          )}
+        </Box>
       </Button>
     </Box>
   );
