@@ -33,13 +33,18 @@ import Divider from '@mui/material/Divider';
 const logoStyle = {
   width: '100px',
   height: 'auto',
+  transition: 'transform 0.3s ease',
+  cursor: 'pointer',
+  '&:hover': {
+    transform: 'scale(1.05)',
+  },
 };
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary" mt={1}>
+    <Typography variant="body2" color="text.secondary" mt={1.5} sx={{ fontWeight: 500 }}>
       {'Copyright © '}
-      Alex Frutkin&nbsp;
+      <Box component="span" sx={{ fontWeight: 600 }}>Alex Frutkin</Box>&nbsp;
       {new Date().getFullYear()}
     </Typography>
   );
@@ -82,21 +87,20 @@ export default function Footer({ mode }) {
             justifyContent: 'space-between',
             pt: { xs: 4, sm: 8 },
             width: '100%',
-            borderTop: '1px solid',
+            borderTop: '2px solid',
             borderColor: 'divider',
+            alignItems: 'center',
           }}
         >
-          <div>
-            <img
-              src={
-                // Conditionally render logo based on mode
-                mode === 'light' ? Logo : DarkLogo
-              }
-              style={logoStyle}
-              alt="logo of sitemark"
+          <Box>
+            <Box
+              component="img"
+              src={mode === 'light' ? Logo : DarkLogo}
+              sx={logoStyle}
+              alt="Frutkin.com logo"
             />
             <Copyright />
-          </div>
+          </Box>
           <Stack
             direction="row"
             justifyContent="left"
@@ -110,7 +114,14 @@ export default function Footer({ mode }) {
               color="inherit"
               href="https://github.com/yummydirtx/frutkin.com"
               aria-label="GitHub"
-              sx={{ alignSelf: 'center' }}
+              sx={{ 
+                alignSelf: 'center',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  color: 'primary.main',
+                },
+              }}
             >
               <FacebookIcon />
             </IconButton>

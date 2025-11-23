@@ -38,6 +38,10 @@ const logoStyle = {
   width: '150px',
   height: 'auto',
   cursor: 'pointer',
+  transition: 'transform 0.3s ease',
+  '&:hover': {
+    transform: 'scale(1.05)',
+  },
 };
 
 function AppAppBar({ mode, toggleColorMode }) {
@@ -73,20 +77,21 @@ function AppAppBar({ mode, toggleColorMode }) {
               alignItems: 'center',
               justifyContent: 'space-between',
               flexShrink: 0,
-              borderRadius: '9px',
+              borderRadius: '12px',
               bgcolor:
                 theme.palette.mode === 'light'
-                  ? 'rgba(255, 255, 255, 0.4)'
-                  : 'rgba(0, 0, 0, 0.4)',
+                  ? 'rgba(255, 255, 255, 0.8)'
+                  : 'rgba(30, 30, 30, 0.8)',
               backdropFilter: 'blur(24px)',
               maxHeight: 40,
               border: '1px solid',
-              borderColor: 'divider',
+              borderColor: theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)',
               boxShadow:
                 theme.palette.mode === 'light'
-                  ? `0 0 1px rgba(85, 166, 246, 0.1), 1px 1.5px 2px -1px rgba(85, 166, 246, 0.15), 4px 4px 12px -2.5px rgba(85, 166, 246, 0.15)`
-                  : '0 0 1px rgba(2, 31, 59, 0.7), 1px 1.5px 2px -1px rgba(2, 31, 59, 0.65), 4px 4px 12px -2.5px rgba(2, 31, 59, 0.65)',
+                  ? '0 2px 8px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.08)'
+                  : '0 2px 8px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.4)',
               pl: 3,
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             })}
           >
             <Box
